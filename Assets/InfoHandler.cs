@@ -9,6 +9,8 @@ public class InfoHandler : MonoBehaviour
     public float minMicOutput = 0.35f;
     public float cooldownTime = 0f;
 
+    public bool characterBlink = true;
+
     public AudioClip microphoneInput = null;
 
     // Start is called before the first frame update
@@ -33,6 +35,11 @@ public class InfoHandler : MonoBehaviour
     public void updateMicCooldown(float newCooldown)
     {
         this.cooldownTime = newCooldown;
+    }
+
+    public void changeBlink(bool blinkState)
+    {
+        this.characterBlink = blinkState;
     }
 
     // Update is called once per frame
