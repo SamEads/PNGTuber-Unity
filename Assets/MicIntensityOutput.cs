@@ -7,16 +7,20 @@ public class MicIntensityOutput : MonoBehaviour
 {
 
     public InfoHandler infoHandler;
+    public float currentIntensity;
+    public Slider micIntensitySlider;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        infoHandler.updateMicIntensity(micIntensitySlider.value);
+        currentIntensity = micIntensitySlider.value;
     }
 
     // Update is called once per frame
     void Update()
     {
+        currentIntensity = LevelMax();
         var anchorMaxIntensity = this.gameObject.GetComponent<RectTransform>().anchorMax;
         anchorMaxIntensity.y = LevelMax();
         this.gameObject.GetComponent<RectTransform>().anchorMax = anchorMaxIntensity;
