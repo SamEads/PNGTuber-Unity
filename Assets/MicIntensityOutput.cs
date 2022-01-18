@@ -7,8 +7,9 @@ public class MicIntensityOutput : MonoBehaviour
 {
 
     public InfoHandler infoHandler;
-    public float currentIntensity;
     public Slider micIntensitySlider;
+    public RectTransform intensityRectangle;
+    public float currentIntensity;
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +22,9 @@ public class MicIntensityOutput : MonoBehaviour
     void Update()
     {
         currentIntensity = LevelMax();
-        var anchorMaxIntensity = this.gameObject.GetComponent<RectTransform>().anchorMax;
+        var anchorMaxIntensity = intensityRectangle.anchorMax;
         anchorMaxIntensity.y = LevelMax();
-        this.gameObject.GetComponent<RectTransform>().anchorMax = anchorMaxIntensity;
+        intensityRectangle.anchorMax = anchorMaxIntensity;
 
         if (LevelMax() > infoHandler.minMicOutput)
         {

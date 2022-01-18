@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SpriteHolder : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class SpriteHolder : CustomButton
 {
 
     public string fileOpenText = "Open File";
@@ -17,57 +17,23 @@ public class SpriteHolder : MonoBehaviour, IPointerClickHandler, IPointerEnterHa
     public GameObject displaySpriteObject;
     public Sprite defaultSprite;
 
-    private Image buttonImage;
-    private Color aimedColor = Color.white;
-
-    private Color hoverColor = new Color(0.8f, 0.8f, 0.8f);
-    private Color clickColor = new Color(0.5f, 0.5f, 0.5f);
-
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
-        buttonImage = gameObject.GetComponent<Image>();
+        base.Start();
         myLoadedSprites.Add(defaultSprite);
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        buttonImage.color = Color.Lerp(buttonImage.color, aimedColor, 10f * Time.deltaTime);
+        base.Update();
         displaySpriteObject.GetComponent<Image>().sprite = myLoadedSprites[0];
     }
 
-    public void OnPointerClick(PointerEventData buttonData)
-    {
-        buttonImage.color = clickColor;
-        if (buttonData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick();
-        }
-        else if (buttonData.button == PointerEventData.InputButton.Left)
-        {
-            OnLeftClick();
-        }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        aimedColor = hoverColor;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        aimedColor = Color.white;
-    }
-
-    private void OnLeftClick()
+    public override void OnLeftClick()
     {
         StartCoroutine(LoadImages());
-    }
-
-    private void OnRightClick()
-    {
-        throw new NotImplementedException();
     }
 
     private IEnumerator LoadImages()

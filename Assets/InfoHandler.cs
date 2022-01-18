@@ -5,12 +5,15 @@ using UnityEngine;
 public class InfoHandler : MonoBehaviour
 {
 
+    [HideInInspector]
     public string curMicrophone;
-    public float minMicOutput = 0.35f;
-    public float cooldownTime = 0f;
-
+    [HideInInspector]
+    public float minMicOutput;
+    [HideInInspector]
+    public float cooldownTime;
+    [HideInInspector]
     public bool characterBlink = true;
-
+    [HideInInspector]
     public AudioClip microphoneInput = null;
 
     // Start is called before the first frame update

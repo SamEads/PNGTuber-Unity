@@ -9,10 +9,10 @@ public class MicCooldown : MonoBehaviour
     public InfoHandler infoHandler;
     public MicIntensityOutput micIntensityOutput;
     public Slider micCoolDownSlider;
-    public float coolDownTime = 0;
     public Image slider;
-
+    public RectTransform CooldownRectangle;
     public CharacterHandler charHandler;
+    public float coolDownTime = 0;
 
     void Start()
     {
@@ -27,30 +27,28 @@ public class MicCooldown : MonoBehaviour
             if (coolDownTime > 0)
             {
                 coolDownTime -= (Time.deltaTime);
-                if (coolDownTime < infoHandler.cooldownTime)
-                {
-                    // Is idle
-                }
             }
         }
         else
         {
-            coolDownTime = 1.25f;
+            coolDownTime = 1.125f;
         }
 
+        charHandler.SetTalkingState(coolDownTime >= infoHandler.cooldownTime);
+
+        // Handle bar color
         float intendedAlpha = 1;
         var color = slider.color;
         if (coolDownTime < infoHandler.cooldownTime)
         {
-            intendedAlpha = 0.5f;
+            intendedAlpha = Math.Max(0.4f, slider.color.a - (3f * Time.deltaTime));
         }
-        charHandler.SetTalkingState(coolDownTime >= infoHandler.cooldownTime);
         color.a = intendedAlpha;
         slider.color = color;
 
-        var anchorMaxIntensity = this.gameObject.GetComponent<RectTransform>().anchorMax;
+        var anchorMaxIntensity = CooldownRectangle.anchorMax;
         anchorMaxIntensity.y = Math.Min(coolDownTime, 1);
-        this.gameObject.GetComponent<RectTransform>().anchorMax = anchorMaxIntensity;
+        CooldownRectangle.anchorMax = anchorMaxIntensity;
 
         infoHandler.updateMicCooldown(micCoolDownSlider.value);
     }
